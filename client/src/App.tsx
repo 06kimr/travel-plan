@@ -7,12 +7,6 @@ const RegisterCity = lazy(() => import("./pages/admin/RegisterCity"));
 
 function App() {
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/admin" />
-    //     <Route path="/register-city" element={<RegisterCity />} />
-    //   </Routes>
-    // </BrowserRouter>
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Routes>
