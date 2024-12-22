@@ -11,7 +11,7 @@ export interface City {
     lat: number;
     lng: number;
   };
-  country: Country["code"]
+  country: Country
 }
 
 export interface Country {
