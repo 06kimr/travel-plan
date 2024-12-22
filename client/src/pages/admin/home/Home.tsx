@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { City } from "../../../../../server/types";
-import CityList from "../../../components/common/home/CityList";
-import FilterList from "../../../components/common/home/FilterList";
-import SearchInput from "../../../components/common/home/SearchInput";
+import NarrowLayout from "../../../components/common/NarrowLayout";
+import CityList from "../../../components/home/CityList";
+import FilterList from "../../../components/home/FilterList";
+import SearchInput from "../../../components/home/SearchInput";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   return (
-    <div className="max-w-[655px] w-full mx-auto flex flex-col items-center ">
+    <NarrowLayout className=" flex flex-col items-center my-30">
       <div className="w-[339px] mb-24">
         <SearchInput
           onChange={setSearch}
@@ -19,7 +20,7 @@ export default function Home() {
         <FilterList active="all" onChange={() => {}} />
       </div>
       <CityList cities={DUMMY_DATA} />
-    </div>
+    </NarrowLayout>
   );
 }
 

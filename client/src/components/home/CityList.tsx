@@ -1,4 +1,4 @@
-import { City } from "../../../../../server/types";
+import { City } from "../../../../server/types";
 import Card from "./Card";
 
 interface Props {
