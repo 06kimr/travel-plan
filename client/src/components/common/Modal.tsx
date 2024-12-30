@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
+import cn from "classnames";
 
 export default function Modal({ children }: PropsWithChildren) {
   return createPortal(
@@ -14,10 +15,20 @@ export function ModalBackdrop() {
   );
 }
 
-export function ModalPanel({ children }: PropsWithChildren) {
+export function ModalPanel({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) {
   return (
     <div className="fixed inset-0 flex items-center justify-center">
-      {children}
+      <div
+        className={cn(
+          "relative bg-white border rounded-20 border-gray100 p-28",
+          className
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 }

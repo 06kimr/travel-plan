@@ -4,6 +4,7 @@ import FlightIcon from "../../assets/icons/airplanemode_active.svg?react";
 import VisaIcon from "../../assets/icons/airplane_ticket.svg?react";
 import VoltageIcon from "../../assets/icons/power.svg?react";
 import ClockIcon from "../../assets/icons/schedule.svg?react";
+import Button from "../common/Button";
 
 interface Props {
   city: City;
@@ -32,7 +33,9 @@ export default function CityDetail({ city }: Props) {
                 <FlightIcon className="mr-8" />
                 <span>항공</span>
               </div>
-              <p className="text-gray600 tracking-[0.14px] text-14 mb-8">직항</p>
+              <p className="text-gray600 tracking-[0.14px] text-14 mb-8">
+                직항
+              </p>
               <p>약 {city.flightHour} 시간</p>
             </div>
 
@@ -54,7 +57,9 @@ export default function CityDetail({ city }: Props) {
                 <VoltageIcon className="mr-8" />
                 <span>전압</span>
               </div>
-              <p className="text-gray600 tracking-[0.14px] text-14 mb-8">콘센트</p>
+              <p className="text-gray600 tracking-[0.14px] text-14 mb-8">
+                콘센트
+              </p>
               <p>{city.country.voltage}V</p>
             </div>
 
@@ -64,7 +69,9 @@ export default function CityDetail({ city }: Props) {
                 <ClockIcon className="mr-8" />
                 <span>시차</span>
               </div>
-              <p className="text-gray600 tracking-[0.14px] text-14 mb-8">한국대비</p>
+              <p className="text-gray600 tracking-[0.14px] text-14 mb-8">
+                한국대비
+              </p>
               <p>
                 {city.timezoneOffset === 0
                   ? "없음"
@@ -80,10 +87,10 @@ export default function CityDetail({ city }: Props) {
         />
       </div>
       <div>
-        <button className="flex items-center justify-center font-medium text-white bg-black w-185 py-14 rounded-6">
+        <Button className="flex items-center justify-center w-185 ">
           <span className="ml-8">일정 만들기</span>
           <ArrowIcon className="ml-5" />
-        </button>
+        </Button>
       </div>
     </div>
   );
