@@ -1,17 +1,54 @@
+import { PropsWithChildren } from "react";
 import { usePlanStore } from "../../store";
-import DailyTimeSelector from "./DailyTimeSelector";
+import DailyTimeController from "./DailyTimeController";
 import PlanControllerHeader from "./PlanControllerHeader";
-import PlanSteps from "./PlanSteps";
+import Wizard from "./Wizard";
 
 export default function PlanController() {
   const { startDate, endDate } = usePlanStore();
   return (
     <div className="flex h-full">
-      <PlanSteps />
-      <div className="flex flex-col px-24 py-30 gap-y-18">
-        <PlanControllerHeader startDate={startDate} endDate={endDate} />
-        <DailyTimeSelector />
-      </div>
+      <Wizard
+        steps={[
+          {
+            title: "날짜 확인",
+            content: ({ onNext }) => (
+              <Layout startDate={startDate} endDate={endDate}>
+                <DailyTimeController onCompleted={onNext} />
+              </Layout>
+            ),
+          },
+          {
+            title: "장소 선택",
+            content: () => (
+              <Layout startDate={startDate} endDate={endDate}>
+                <div>장소 선택</div>
+              </Layout>
+            ),
+          },
+          {
+            title: "숙소 선택",
+            content: () => (
+              <Layout startDate={startDate} endDate={endDate}>
+                <div>숙소 선택</div>
+              </Layout>
+            ),
+          },
+        ]}
+      />
+    </div>
+  );
+}
+
+function Layout({
+  children,
+  startDate,
+  endDate,
+}: PropsWithChildren<{ startDate: Date | null; endDate: Date | null }>) {
+  return (
+    <div className="flex flex-col px-24 py-30 gap-y-18">
+      <PlanControllerHeader startDate={startDate} endDate={endDate} />
+      {children}
     </div>
   );
 }

@@ -5,7 +5,7 @@ import UpArrowIcon from "../../assets/icons/keyboard_arrow_up.svg?react";
 import { usePlanStore } from "../../store";
 import Button from "../common/Button";
 
-export default function DailyTimeSelector() {
+export default function DailyTimeController({onCompleted}: {onCompleted: () => void}) {
   const [hidden, setHidden] = useState(false);
   const { dailyTimes, setDailyTime } = usePlanStore();
 
@@ -38,11 +38,11 @@ export default function DailyTimeSelector() {
             <div>
         <table className="text-center text-15 mb-36">
           <thead>
-            <tr className="bg-bg">
-              <th className="px-20 py-10">일자</th>
-              <th className="px-20 py-10">요일</th>
-              <th className="px-32 py-10">시작시간</th>
-              <th className="px-32 py-10">종료시간</th>
+            <tr className=" bg-bg whitespace-nowrap">
+              <th className="px-20 py-10 whitespace-nowrap">일자</th>
+              <th className="px-20 py-10 whitespace-nowrap">요일</th>
+              <th className="px-32 py-10 whitespace-nowrap">시작시간</th>
+              <th className="px-32 py-10 whitespace-nowrap">종료시간</th>
             </tr>
           </thead>
           <tbody className="before:content-[''] before:block before:h-6">
@@ -74,7 +74,7 @@ export default function DailyTimeSelector() {
         </table>
 
         <div>
-          <Button className="px-47">시간 설정 완료</Button>
+          <Button className="px-47" onClick={onCompleted}>시간 설정 완료</Button>
         </div>
       </div>
           </>
