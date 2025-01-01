@@ -4,7 +4,7 @@ import Loading from "../../components/common/Loading";
 import NarrowLayout from "../../components/common/NarrowLayout";
 import CityList from "../../components/home/CityList";
 import FilterList from "../../components/home/FilterList";
-import SearchInput from "../../components/home/SearchInput";
+import SearchInput from "../../components/common/SearchInput";
 import { getCities, getSearchedCities } from "../../services/home";
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
   ) : (
     <NarrowLayout className="flex flex-col items-center my-30">
       <div className="w-[339px] mb-24">
-        <SearchInput onCompositionEnd={(value) => setQ(value)} />
+        <SearchInput onSearch={(value) => setQ(value)} />
       </div>
       <div className="mb-21">
         <FilterList active="all" onChange={() => {}} />
