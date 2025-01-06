@@ -1,9 +1,10 @@
 import { PropsWithChildren } from "react";
 import { usePlanStore } from "../../store";
 import DailyTimeController from "./DailyTimeController";
+import PlaceContainer from "./PlaceContainer";
+import PlaceController from "./PlaceController";
 import PlanControllerHeader from "./PlanControllerHeader";
 import Wizard from "./Wizard";
-import PlaceController from "./PlaceController";
 
 export default function PlanController() {
   const { startDate, endDate } = usePlanStore();
@@ -14,25 +15,44 @@ export default function PlanController() {
           {
             title: "날짜 확인",
             content: ({ onNext }) => (
-              <Layout startDate={startDate} endDate={endDate}>
+              <div className="flex flex-col h-full px-24 overflow-y-hidden py-30 gap-y-18">
+                <PlanControllerHeader startDate={startDate} endDate={endDate} />
                 <DailyTimeController onCompleted={onNext} />
-              </Layout>
+              </div>
             ),
           },
           {
             title: "장소 선택",
             content: () => (
-              <Layout startDate={startDate} endDate={endDate}>
-                <PlaceController />
-              </Layout>
+              <div className="flex">
+                <div className="flex flex-col h-full px-24 overflow-y-hidden py-30 gap-y-18">
+                  <PlanControllerHeader
+                    startDate={startDate}
+                    endDate={endDate}
+                  />
+
+                  <div className="h-full">
+                    <div className="p-14 border-b-3 border-b-main mb-18">
+                      <h4 className="font-semibold text-18 text-main">
+                        장소 선택
+                      </h4>
+                    </div>
+                    <PlaceContainer />
+                  </div>
+                </div>
+                <div className="px-24 py-30 ">
+                  <PlaceController />
+                </div>
+              </div>
             ),
           },
           {
             title: "숙소 선택",
             content: () => (
-              <Layout startDate={startDate} endDate={endDate}>
+              <div className="flex flex-col h-full px-24 overflow-y-hidden py-30 gap-y-18">
+                <PlanControllerHeader startDate={startDate} endDate={endDate} />
                 <div>숙소 선택</div>
-              </Layout>
+              </div>
             ),
           },
         ]}

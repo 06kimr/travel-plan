@@ -7,11 +7,14 @@ import { useParams } from "react-router-dom";
 import { getPlaces } from "../../services/plan";
 import Loading from "../common/Loading";
 import PlaceList from "./PlaceList";
+import { usePlanStore } from "../../store";
 
 export default function PlaceContainer() {
   const { city } = useParams();
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<Place["category"] | null>(null);
+
+  const { addPlannedPlace } = usePlanStore();
 
   const { isLoading, data } = useQuery({
     queryKey: ["places", city, q, filter],
@@ -37,7 +40,14 @@ export default function PlaceContainer() {
       <SearchInput onSearch={(query) => setQ(query)} />
       <PlaceFilterList selected={filter} onFilter={handleFilter} />
       <div className="flex-1 overflow-y-hidden">
-        {isLoading || !data ? <Loading /> : <PlaceList places={data} />}
+        {isLoading || !data ? (
+          <Loading />
+        ) : (
+          <PlaceList
+            places={data}
+            onAddPlace={(place: Place) => addPlannedPlace(place, 120)}
+          />
+        )}
       </div>
     </div>
   );

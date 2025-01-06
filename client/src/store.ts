@@ -1,19 +1,31 @@
 import { addDays, differenceInDays } from "date-fns";
 import { FunctionComponent } from "react";
 import { create } from "zustand";
+import { Place } from "./types";
 
 interface State {
   startDate: Date | null;
   endDate: Date | null;
   status: "period_edit" | "planning";
   dailyTimes: { startTime: string; endTime: string; date: Date }[];
+  plannedPlaces: {
+    place: Place;
+    duration: number; //minutes
+  }[];
 }
 
 type Action = {
   setStartDate: (date: Date | null) => void;
   setEndDate: (date: Date | null) => void;
   setStatus: (status: State["status"]) => void;
-  setDailyTime: (index: number, time: string, type: "startTime" | "endTime") => void;
+  setDailyTime: (
+    index: number,
+    time: string,
+    type: "startTime" | "endTime"
+  ) => void;
+  addPlannedPlace: (place: Place, duration: number) => void;
+  removePlannedPlace: (index: number) => void;
+  setDurationForPlannedPlace: (index: number, duration: number) => void;
 };
 
 export const usePlanStore = create<State & Action>()((set, get) => ({
@@ -21,6 +33,8 @@ export const usePlanStore = create<State & Action>()((set, get) => ({
   endDate: null,
   status: "period_edit",
   dailyTimes: [],
+  plannedPlaces: [],
+
   setStartDate: (date) => set({ startDate: date }),
   setEndDate: (date) => {
     if (date) {
@@ -40,11 +54,26 @@ export const usePlanStore = create<State & Action>()((set, get) => ({
   },
   setStatus: (status) => set({ status }),
   setDailyTime: (index, time, type) => {
-    set(state => ({
-      dailyTimes: state.dailyTimes.map((dailyTime, i) => i=== index ? {...dailyTime, [type]: time}: dailyTime)
-    }))
-   
+    set((state) => ({
+      dailyTimes: state.dailyTimes.map((dailyTime, i) =>
+        i === index ? { ...dailyTime, [type]: time } : dailyTime
+      ),
+    }));
   },
+  addPlannedPlace: (place: Place, duration: number) =>
+    set((prev) => ({
+      plannedPlaces: [...prev.plannedPlaces, { place, duration }],
+    })),
+  removePlannedPlace: (index) =>
+    set((prev) => ({
+      plannedPlaces: prev.plannedPlaces.filter((_, i) => i !== index),
+    })),
+  setDurationForPlannedPlace: (index: number, duration: number) =>
+    set((prev) => ({
+      plannedPlaces: prev.plannedPlaces.map((place, i) =>
+        i === index ? { ...place, duration } : place
+      ),
+    })),
 }));
 
 interface ModalState {
