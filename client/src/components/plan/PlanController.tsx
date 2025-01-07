@@ -1,11 +1,11 @@
-import { PropsWithChildren } from "react";
 import { usePlanStore } from "../../store";
+import AccommodationContainer from "./AccommodationContainer";
+import AccommodationController from "./AccommodationController";
 import DailyTimeController from "./DailyTimeController";
 import PlaceContainer from "./PlaceContainer";
 import PlaceController from "./PlaceController";
 import PlanControllerHeader from "./PlanControllerHeader";
 import Wizard from "./Wizard";
-import AccommodationContainer from "./AccommodationContainer";
 
 export default function PlanController() {
   const { startDate, endDate } = usePlanStore();
@@ -67,26 +67,13 @@ export default function PlanController() {
                   </div>
                 </div>
                 <div className="px-24 py-30 ">
-                  {/* <PlaceController /> */}
+                  <AccommodationController />
                 </div>
               </div>
             ),
           },
         ]}
       />
-    </div>
-  );
-}
-
-function Layout({
-  children,
-  startDate,
-  endDate,
-}: PropsWithChildren<{ startDate: Date | null; endDate: Date | null }>) {
-  return (
-    <div className="flex flex-col h-full px-24 overflow-y-hidden py-30 gap-y-18">
-      <PlanControllerHeader startDate={startDate} endDate={endDate} />
-      {children}
     </div>
   );
 }

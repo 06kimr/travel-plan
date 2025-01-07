@@ -2,17 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPlaces } from "../../services/plan";
-import { usePlanStore } from "../../store";
 import { Place } from "../../types";
 import Loading from "../common/Loading";
 import SearchInput from "../common/SearchInput";
 import PlaceList from "./PlaceList";
+import { usePlanStore } from "../../store";
 
 export default function AccommodationContainer() {
   const { city } = useParams();
   const [q, setQ] = useState("");
 
-  // const { addPlannedPlace } = usePlanStore();
+  const { addPlannedAccommodation } = usePlanStore();
 
   const { isLoading, data } = useQuery({
     queryKey: ["places", city, q],
@@ -35,7 +35,10 @@ export default function AccommodationContainer() {
         ) : (
           <PlaceList
             places={data}
-            onAddPlace={(place: Place) => console.log("place", place)}
+            onAddPlace={(place: Place) => {
+              console.log("place", place);
+              addPlannedAccommodation(place);
+            }}
           />
         )}
       </div>

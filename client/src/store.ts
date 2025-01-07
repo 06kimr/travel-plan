@@ -12,6 +12,7 @@ interface State {
     place: Place;
     duration: number; //minutes
   }[];
+  plannedAccommodations: Array<Place | null>;
 }
 
 type Action = {
@@ -26,6 +27,8 @@ type Action = {
   addPlannedPlace: (place: Place, duration: number) => void;
   removePlannedPlace: (index: number) => void;
   setDurationForPlannedPlace: (index: number, duration: number) => void;
+  addPlannedAccommodation: (place: Place) => void;
+  removePlannedAccommodation: (index: number) => void;
 };
 
 export const usePlanStore = create<State & Action>()((set, get) => ({
@@ -34,6 +37,7 @@ export const usePlanStore = create<State & Action>()((set, get) => ({
   status: "period_edit",
   dailyTimes: [],
   plannedPlaces: [],
+  plannedAccommodations: [],
 
   setStartDate: (date) => set({ startDate: date }),
   setEndDate: (date) => {
@@ -47,9 +51,13 @@ export const usePlanStore = create<State & Action>()((set, get) => ({
           date: addDays(startDate, i),
         };
       });
-      set({ dailyTimes, endDate: date });
+      set({
+        dailyTimes,
+        endDate: date,
+        plannedAccommodations: Array.from({ length: diff - 1 }, () => null),
+      });
     } else {
-      set({ endDate: date, dailyTimes: [] });
+      set({ endDate: date, dailyTimes: [], plannedAccommodations: [] });
     }
   },
   setStatus: (status) => set({ status }),
@@ -72,6 +80,22 @@ export const usePlanStore = create<State & Action>()((set, get) => ({
     set((prev) => ({
       plannedPlaces: prev.plannedPlaces.map((place, i) =>
         i === index ? { ...place, duration } : place
+      ),
+    })),
+  addPlannedAccommodation: (place: Place) =>
+    set((prev) => {
+      const index = prev.plannedAccommodations.findIndex((p) => p === null);
+      if (index === -1) return prev;
+      return {
+        plannedAccommodations: prev.plannedAccommodations.map((p, i) =>
+          i === index ? place : p
+        ),
+      };
+    }),
+  removePlannedAccommodation: (index: number) =>
+    set((prev) => ({
+      plannedAccommodations: prev.plannedAccommodations.map((p, i) =>
+        i === index ? null : p
       ),
     })),
 }));
