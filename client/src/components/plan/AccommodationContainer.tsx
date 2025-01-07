@@ -1,51 +1,41 @@
-import { useState } from "react";
-import { Place } from "../../types";
-import SearchInput from "../common/SearchInput";
-import { PlaceFilterList } from "./PlaceFilterList";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPlaces } from "../../services/plan";
-import Loading from "../common/Loading";
-import PlaceList from "./PlaceList";
 import { usePlanStore } from "../../store";
+import { Place } from "../../types";
+import Loading from "../common/Loading";
+import SearchInput from "../common/SearchInput";
+import PlaceList from "./PlaceList";
 
-export default function PlaceContainer() {
+export default function AccommodationContainer() {
   const { city } = useParams();
   const [q, setQ] = useState("");
-  const [filter, setFilter] = useState<Place["category"] | null>(null);
 
-  const { addPlannedPlace } = usePlanStore();
+  // const { addPlannedPlace } = usePlanStore();
 
   const { isLoading, data } = useQuery({
-    queryKey: ["places", city, q, filter],
+    queryKey: ["places", city, q],
     enabled: !!city,
     queryFn: () => {
       const query = {
         ...(q ? { q } : {}),
-        ...(filter ? { category: filter } : {category: ["attraction", "restaurant", "cafe"]}),
+        ...{ category: "accommodation" },
       };
       return getPlaces(city!, query);
     },
   });
 
-  const handleFilter = (category: Place["category"]) => {
-    if (filter === category) {
-      setFilter(null);
-    } else {
-      setFilter(category);
-    }
-  };
   return (
     <div className="flex flex-col h-full gap-y-18">
       <SearchInput onSearch={(query) => setQ(query)} />
-      <PlaceFilterList selected={filter} onFilter={handleFilter} />
       <div className="flex-1 overflow-y-hidden">
         {isLoading || !data ? (
           <Loading />
         ) : (
           <PlaceList
             places={data}
-            onAddPlace={(place: Place) => addPlannedPlace(place, 120)}
+            onAddPlace={(place: Place) => console.log("place", place)}
           />
         )}
       </div>
