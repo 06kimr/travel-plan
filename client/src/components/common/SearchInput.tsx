@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import SearchIcon from "../../assets/icons/search.svg?react";
-import useThrottle from "../../hooks/useThrottle";
+import useThrottle from "../../hooks/common/useThrottle";
 
 interface Props {
   onSearch: (value: string) => void;

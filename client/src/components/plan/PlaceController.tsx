@@ -1,5 +1,5 @@
 import { usePlanStore } from "../../store";
-import { getTotalTime, parseMinutesToTime, printTime } from "../../utils/time";
+import { getTotalTime, parseTime, printTime } from "../../utils/time";
 import PlannedPlaceList from "./PlannedPlaceList";
 
 export default function PlaceController() {
@@ -19,8 +19,8 @@ export default function PlaceController() {
       <h5 className="flex items-end mb-13">
         <span className="text-30 font-medium tracking-[0.3px] mr-8">{plannedPlaces.length}</span>
         <span className="text-15 tracking-[0.15px] mb-4">
-          {printTime(parseMinutesToTime(plannedTime))} /{" "}
-          {printTime(parseMinutesToTime(totalTime))}
+          {printTime(parseTime(plannedTime))} /{" "}
+          {printTime(parseTime(totalTime))}
         </span>
       </h5>
       {plannedPlaces.length === 0 ? (

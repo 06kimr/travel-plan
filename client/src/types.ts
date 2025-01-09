@@ -11,7 +11,7 @@ export interface City {
     lat: number;
     lng: number;
   };
-  country: Country
+  country: Country;
 }
 
 export interface Country {
@@ -31,18 +31,25 @@ export interface Country {
     | "North America"
     | "South America"
     | "Antarctica";
-};
+}
 
 export interface Place {
   name: string;
   thumbnail: string;
-  category: 'attraction' | 'restaurant' | 'cafe' | "accommodation";
+  category: "attraction" | "restaurant" | "cafe" | "accommodation";
   address: string;
   coordinates: {
     lat: number;
-    lng: number
+    lng: number;
   };
   likes: number;
   rating: number;
-  city: City['code']
+  city: City["code"];
+}
+
+export interface ItineraryItem {
+  place: Place;
+  duration: number; //장소에 머무르는 시간
+  startTime: string;
+  endTime: string;
 }

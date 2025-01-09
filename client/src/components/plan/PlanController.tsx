@@ -1,17 +1,23 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { usePlanStore } from "../../store";
 import AccommodationContainer from "./AccommodationContainer";
 import AccommodationController from "./AccommodationController";
 import DailyTimeController from "./DailyTimeController";
 import PlaceContainer from "./PlaceContainer";
 import PlaceController from "./PlaceController";
-import PlanControllerHeader from "./PlanControllerHeader";
+import PlanControllerHeader from "../common/shared/ControllerHeader";
 import Wizard from "./Wizard";
 
 export default function PlanController() {
   const { startDate, endDate } = usePlanStore();
+  const { city } = useParams();
+  const navigate = useNavigate();
   return (
     <div className="flex h-full">
       <Wizard
+        onCompleted={() => {
+          navigate(`/itinerary/${city}`);
+        }}
         steps={[
           {
             title: "날짜 확인",

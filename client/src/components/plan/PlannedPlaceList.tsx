@@ -1,9 +1,9 @@
-import { categories } from "../../constants";
-import { Place } from "../../types";
-import DeleteIcon from "../../assets/icons/delete.svg?react";
 import { useState } from "react";
-import { parseMinutesToTime } from "../../utils/time";
+import DeleteIcon from "../../assets/icons/delete.svg?react";
+import { Place } from "../../types";
+import { parseTime } from "../../utils/time";
 import Button from "../common/Button";
+import PlaceCategory from "../common/PlaceCategory";
 
 interface Props {
   plannedPlaces: {
@@ -45,7 +45,7 @@ function PlannedPlace({
   onEditDuration: (duration: number) => void;
 }) {
   const [editing, setEditing] = useState(false);
-  const { hours, minutes } = parseMinutesToTime(plannedPlace.duration);
+  const { hours, minutes } = parseTime(plannedPlace.duration);
   const [newHours, setNewHours] = useState(hours);
   const [newMinutes, setNewMinutes] = useState(minutes);
   return (
@@ -65,9 +65,10 @@ function PlannedPlace({
                 {plannedPlace.place.name}
               </h6>
               <p className="text-14 tracking-[0.14px] text-gray500 overflow-hidden whitespace-nowrap text-ellipsis">
-                <span className="font-medium text-main">
-                  {categories[plannedPlace.place.category]}
-                </span>
+                <PlaceCategory
+                  className="text-14 tracking-[0.14px]"
+                  category={plannedPlace.place.category}
+                />
                 {plannedPlace.place.address}
               </p>
             </div>

@@ -1,7 +1,14 @@
+import { useLocation } from "react-router-dom";
 import { useModalStore } from "../../store";
+import { useEffect } from "react";
 
 export default function ModalProvider() {
-  const { modals, closeModal } = useModalStore();
+  const { modals, closeModal, clearModals } = useModalStore();
+  const location = useLocation();
+
+  useEffect(() => {
+    clearModals();
+  }, [location]);
 
   return (
     <>

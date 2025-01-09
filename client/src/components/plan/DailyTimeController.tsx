@@ -5,7 +5,7 @@ import UpArrowIcon from "../../assets/icons/keyboard_arrow_up.svg?react";
 import { usePlanStore } from "../../store";
 import {
   getTotalTime,
-  parseMinutesToTime,
+  parseTime,
   printTime
 } from "../../utils/time";
 import Button from "../common/Button";
@@ -25,7 +25,7 @@ export default function DailyTimeController({
         <p className="text-17 font-medium tracking-[0.17px] flex ga-x-16 ">
           <span className="mr-16">여행시간 상세설명</span>
           <span className="text-[#5a88ff]">
-            총 {printTime(parseMinutesToTime(totalTime))}
+            총 {printTime(parseTime(totalTime))}
           </span>
           <button onClick={() => setHidden((prev) => !prev)}>
             <UpArrowIcon className={cn({ "rotate-180": !hidden })} />

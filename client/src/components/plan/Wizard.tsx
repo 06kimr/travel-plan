@@ -9,9 +9,10 @@ type Step = {
 
 interface Props {
   steps: Step[];
+  onCompleted?: () => void;
 }
 
-export default function Wizard({ steps }: Props) {
+export default function Wizard({ steps, onCompleted }: Props) {
   const [currentStep, setCurrentStep] = useState(0);
 
   const onNext = () => {
@@ -23,6 +24,7 @@ export default function Wizard({ steps }: Props) {
         steps={steps}
         currentStep={currentStep}
         onChangeStep={setCurrentStep}
+        onCompleted={onCompleted}
       />
       {steps[currentStep].content({ onNext })}
     </div>
@@ -33,10 +35,12 @@ function Steps({
   steps,
   currentStep,
   onChangeStep,
+  onCompleted,
 }: {
   steps: Step[];
   currentStep: number;
   onChangeStep: (index: number) => void;
+  onCompleted?: () => void;
 }) {
   return (
     <div className="flex flex-col items-center justify-between flex-shrink px-20 py-50 w-140 whitespace-nowrap">
@@ -60,11 +64,19 @@ function Steps({
           );
         })}
       </ul>
-      {currentStep < steps.length - 1 && (
-        <Button className=" px-36" onClick={() => onChangeStep(currentStep + 1)}>
-          다음
-        </Button>
-      )}
+      {(currentStep < steps.length - 1 ||
+        onCompleted) && (
+          <Button
+            className=" px-36"
+            onClick={() =>
+              currentStep < steps.length - 1
+                ? onChangeStep(currentStep + 1)
+                : onCompleted?.()
+            }
+          >
+            다음
+          </Button>
+        )}
     </div>
   );
 }
