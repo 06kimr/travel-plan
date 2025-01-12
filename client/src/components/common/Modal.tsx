@@ -4,7 +4,7 @@ import cn from "classnames";
 
 export default function Modal({ children }: PropsWithChildren) {
   return createPortal(
-    <div className="fixed inset-0 w-full h-full">{children}</div>,
+    <div className="fixed inset-0 w-full h-full" role="dialog">{children}</div>,
     document.body
   );
 }

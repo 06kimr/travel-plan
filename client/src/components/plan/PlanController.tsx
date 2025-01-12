@@ -7,23 +7,28 @@ import PlaceContainer from "./PlaceContainer";
 import PlaceController from "./PlaceController";
 import PlanControllerHeader from "../common/shared/ControllerHeader";
 import Wizard from "./Wizard";
+import { City } from "../../types";
 
-export default function PlanController() {
+export default function PlanController({ city }: { city: City }) {
   const { startDate, endDate } = usePlanStore();
-  const { city } = useParams();
+  const { city: cityId } = useParams();
   const navigate = useNavigate();
   return (
     <div className="flex h-full">
       <Wizard
         onCompleted={() => {
-          navigate(`/itinerary/${city}`);
+          navigate(`/itinerary/${cityId}`);
         }}
         steps={[
           {
             title: "날짜 확인",
             content: ({ onNext }) => (
               <div className="flex flex-col h-full px-24 overflow-y-hidden py-30 gap-y-18">
-                <PlanControllerHeader startDate={startDate} endDate={endDate} />
+                <PlanControllerHeader
+                  startDate={startDate}
+                  endDate={endDate}
+                  cityName={city.country.name}
+                />
                 <DailyTimeController onCompleted={onNext} />
               </div>
             ),
@@ -36,6 +41,7 @@ export default function PlanController() {
                   <PlanControllerHeader
                     startDate={startDate}
                     endDate={endDate}
+                    cityName={city.country.name}
                   />
 
                   <div className="h-full">
@@ -61,6 +67,7 @@ export default function PlanController() {
                   <PlanControllerHeader
                     startDate={startDate}
                     endDate={endDate}
+                    cityName={city.country.name}
                   />
 
                   <div className="h-full">

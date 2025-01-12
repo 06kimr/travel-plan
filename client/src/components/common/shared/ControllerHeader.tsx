@@ -4,12 +4,13 @@ import CalendarIcon from "../../../assets/icons/calendar_today.svg?react";
 interface Props {
   startDate: Date | null;
   endDate: Date | null;
+  cityName: string;
 }
 
-export default function ControllerHeader({ startDate, endDate }: Props) {
+export default function ControllerHeader({ startDate, endDate, cityName }: Props) {
   return (
     <div className="text-left">
-      <h2 className="font-bold text-35 mb-18">도쿄</h2>
+      <h2 className="font-bold text-35 mb-18">{cityName}</h2>
       {startDate && endDate && (
         <div className="text-17 tracking-[0.17px] font-medium flex items-center">
           <span className="mr-8">{`${format(

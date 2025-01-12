@@ -27,7 +27,7 @@ export default function CityList({ cities }: Props) {
   return (
     <div className="flex flex-wrap items-start justify-between w-full gap-y-28">
       {cities.map((city: City) => (
-        <button onClick={() => openDetailModal(city)} key={city.code}>
+        <button onClick={() => openDetailModal(city)} key={city.code} data-testid="city-card">
           <Card
             title={city.nameEn.toUpperCase()}
             description={`${city.country.name} ${city.name}`}

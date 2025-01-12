@@ -3,11 +3,7 @@ import { format } from "date-fns";
 import { useState } from "react";
 import UpArrowIcon from "../../assets/icons/keyboard_arrow_up.svg?react";
 import { usePlanStore } from "../../store";
-import {
-  getTotalTime,
-  parseTime,
-  printTime
-} from "../../utils/time";
+import { getTotalTime, parseTime, printTime } from "../../utils/time";
 import Button from "../common/Button";
 
 export default function DailyTimeController({
@@ -58,6 +54,7 @@ export default function DailyTimeController({
                       <td className="py-10">{format(dailyTime.date, "EEE")}</td>
                       <td className="py-10">
                         <input
+                          data-testid="daily-time-start"
                           type="time"
                           value={dailyTime.startTime}
                           onChange={(e) =>
@@ -71,6 +68,7 @@ export default function DailyTimeController({
                       </td>
                       <td className="py-10">
                         <input
+                          data-testid="daily-time-end"
                           type="time"
                           value={dailyTime.endTime}
                           onChange={(e) =>

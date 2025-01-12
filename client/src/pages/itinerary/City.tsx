@@ -6,17 +6,18 @@ import WideLayout from "../../components/common/WideLayout";
 import useGenerateItinerary from "../../hooks/itinerary/useGenerateItinerary";
 import { usePlanStore } from "../../store";
 import { ItineraryItem } from "../../types";
+import { useQuery } from "@tanstack/react-query";
+import { planQueries } from "../../services/queryFactory";
 
 export default function ItineraryCity() {
   const { generateItinerary } = useGenerateItinerary();
 
   const { plannedPlaces, dailyTimes } = usePlanStore();
   const navigate = useNavigate();
-  const { city } = useParams();
+  const { city = "" } = useParams();
+  const { data, isLoading } = useQuery(planQueries.city(city));
 
-  const [itinerary, setItinerary] = useState<
-    ItineraryItem[][] | null
-  >(null);
+  const [itinerary, setItinerary] = useState<ItineraryItem[][] | null>(null);
 
   useEffect(() => {
     if (plannedPlaces.length === 0 || dailyTimes.length === 0) {
@@ -29,13 +30,13 @@ export default function ItineraryCity() {
     });
   }, [dailyTimes, generateItinerary, plannedPlaces, navigate, city]);
 
-  return (
+  return  (
     <WideLayout>
-      {!itinerary ? (
+      
+      {!itinerary || !data || isLoading ? (
         <Loading />
       ) : (
-          <ItineraryController itinerary={itinerary} />
-
+        <ItineraryController itinerary={itinerary} city={data} />
       )}
     </WideLayout>
   );

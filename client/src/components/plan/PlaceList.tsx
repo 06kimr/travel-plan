@@ -32,7 +32,7 @@ function PlaceItem({
   onAddPlace: (place: Place) => void;
 }) {
   return (
-    <div className="flex mb-24 gap-x-11">
+    <div className="flex mb-24 gap-x-11" data-testid="place-card">
       <img src={place.thumbnail} className="w-68 h-68 rounded-6 bg-bg" />
       <div className="flex flex-col items-start flex-1 gap-y-8">
         <h6 className="text-17 font-semibold tracking-[0.75px]">
@@ -58,7 +58,7 @@ function PlaceItem({
       </div>
       <button className="relative" onClick={() => onAddPlace(place)}>
         <PlusRectIcon />
-        <PlusIcon className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" />
+        <PlusIcon className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" title="plus"/>
       </button>
     </div>
   );
